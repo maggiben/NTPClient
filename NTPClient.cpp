@@ -154,13 +154,13 @@ int NTPClient::getSeconds() {
 
 String NTPClient::getFormattedTime(unsigned long secs) {
   unsigned long rawTime = secs ? secs : this->getEpochTime();
-  unsigned long hours = (rawTime % 86400L) / 3600;
+  int hours = (rawTime % 86400L) / 3600;
   String hoursStr = hours < 10 ? "0" + String(hours) : String(hours);
 
-  unsigned long minutes = (rawTime % 3600) / 60;
+  int minutes = (rawTime % 3600) / 60;
   String minuteStr = minutes < 10 ? "0" + String(minutes) : String(minutes);
 
-  unsigned long seconds = rawTime % 60;
+  int seconds = rawTime % 60;
   String secondStr = seconds < 10 ? "0" + String(seconds) : String(seconds);
 
   return hoursStr + ":" + minuteStr + ":" + secondStr;
@@ -170,7 +170,7 @@ String NTPClient::getFormattedTime(unsigned long secs) {
 // currently assumes UTC timezone, instead of using this->_timeOffset
 String NTPClient::getFormattedDate(unsigned long secs) {
   unsigned long rawTime = (secs ? secs : this->getEpochTime()) / 86400L;  // in days
-  unsigned long days = 0, year = 1970;
+  long days = 0, year = 1970;
   uint8_t month;
   static const uint8_t monthDays[]={31,28,31,30,31,30,31,31,30,31,30,31};
 
